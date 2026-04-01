@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стратегия розыгрыша — T.S x Tassay Energy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 200, 83, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255, 193, 7, 0.06) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #0a0a0a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #b0bec5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #90a4ae;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #78909c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: #546e7a;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .scroll-indicator svg {
+            display: block;
+            margin: 0.5rem auto 0;
+            width: 24px;
+            height: 24px;
+            stroke: #546e7a;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #00c853;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: #78909c;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Partners Section */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .partner-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 200, 83, 0.3);
+        }
+
+        .partner-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-icon.ts {
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #0a0a0a;
+        }
+
+        .partner-icon.yp {
+            background: linear-gradient(135deg, #ff9800, #ffc107);
+            color: #0a0a0a;
+        }
+
+        .partner-icon.tassay {
+            background: linear-gradient(135deg, #2196f3, #03a9f4);
+            color: #fff;
+        }
+
+        .partner-card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+
+        .partner-card p {
+            color: #78909c;
+            font-size: 0.95rem;
+        }
+
+        /* Promo Mechanic */
+        .promo-visual {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .promo-formula {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .promo-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            min-width: 160px;
+        }
+
+        .promo-item-count {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00e676;
+        }
+
+        .promo-item-label {
+            font-size: 0.85rem;
+            color: #90a4ae;
+            margin-top: 0.25rem;
+        }
+
+        .promo-plus {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffc107;
+        }
+
+        .promo-equals {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff5722;
+        }
+
+        .promo-result {
+            background: linear-gradient(135deg, rgba(0, 200, 83, 0.15), rgba(0, 230, 118, 0.05));
+            border: 2px solid rgba(0, 200, 83, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2.5rem;
+            min-width: 200px;
+        }
+
+        .promo-result .promo-item-count {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00e676, #00c853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .promo-note {
+            color: #546e7a;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .step:hover {
+            border-color: rgba(0, 200, 83, 0.2);
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .step-content h3 {
+            font-size: 1.15rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: #78909c;
+            font-size: 0.95rem;
+        }
+
+        /* Prize Section */
+        .prize-section {
+            background: linear-gradient(135deg, #1a1a2e, #0d2137);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 193, 7, 0.15);
+            overflow: hidden;
+        }
+
+        .prize-header {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.05));
+            padding: 3rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+        }
+
+        .prize-amount {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .prize-unit {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffb300;
+            margin-top: 0.5rem;
+        }
+
+        .prize-fuel {
+            font-size: 1.1rem;
+            color: #78909c;
+            margin-top: 0.5rem;
+        }
+
+        .prize-details {
+            padding: 2.5rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .prize-detail {
+            text-align: center;
+        }
+
+        .prize-detail-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .prize-detail h4 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .prize-detail p {
+            color: #546e7a;
+            font-size: 0.85rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #00c853, #ffc107, #ff5722);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.5rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #00c853;
+            border: 3px solid #0a0a0a;
+        }
+
+        .timeline-item:nth-child(2)::before { background: #2196f3; }
+        .timeline-item:nth-child(3)::before { background: #ffc107; }
+        .timeline-item:nth-child(4)::before { background: #ff5722; }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #00c853;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item:nth-child(2) .timeline-date { color: #2196f3; }
+        .timeline-item:nth-child(3) .timeline-date { color: #ffc107; }
+        .timeline-item:nth-child(4) .timeline-date { color: #ff5722; }
+
+        .timeline-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-desc {
+            color: #78909c;
+            font-size: 0.9rem;
+        }
+
+        /* Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .benefit:hover {
+            transform: translateY(-2px);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit h3 {
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit p {
+            color: #78909c;
+            font-size: 0.9rem;
+        }
+
+        /* Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .summary-card-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #00e676;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-card-label {
+            font-size: 0.85rem;
+            color: #78909c;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #37474f;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .footer strong {
+            color: #546e7a;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .promo-formula {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            .prize-details {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">Стратегия акции 2026</div>
+            <h1>Заправляйся энергией — <span>выиграй топливо!</span></h1>
+            <p class="hero-subtitle">Масштабная акция на заправках T.S совместно с поставщиком «Юг Продукт» и брендом Tassay Energy</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-value">1000+</div>
+                    <div class="stat-label">Банок энергетика</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">2+1</div>
+                    <div class="stat-label">Формат акции</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">300 л</div>
+                    <div class="stat-label">Главный приз</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            Подробнее
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Участники -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">01 / Участники</div>
+            <h2 class="section-title">Партнёры акции</h2>
+            <p class="section-desc">Три стороны, объединённые общей целью — увеличить продажи и привлечь клиентов</p>
+        </div>
+        <div class="partners-grid">
+            <div class="partner-card">
+                <div class="partner-icon ts">T.S</div>
+                <h3>Сеть заправок T.S</h3>
+                <p>Организатор акции. Предоставляет площадки для проведения розыгрыша, топливо в качестве главного приза и маркетинговую поддержку на точках.</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-icon yp">ЮП</div>
+                <h3>Юг Продукт</h3>
+                <p>Поставщик продукции. Выделяет более 1000 банок энергетика Tassay Energy для формирования акционных комплектов 1+1.</p>
+            </div>
+            <div class="partner-card">
+                <div class="partner-icon tassay">TE</div>
+                <h3>Tassay Energy</h3>
+                <p>Продвигаемый бренд. Энергетический напиток, вокруг которого строится механика акции и привлечение целевой аудитории.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Механика акции -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">02 / Механика</div>
+            <h2 class="section-title">Формат акции 2+1</h2>
+            <p class="section-desc">Простая и понятная схема, которая мотивирует покупателя</p>
+        </div>
+
+        <div class="promo-visual">
+            <div class="promo-formula">
+                <div class="promo-item">
+                    <div class="promo-item-count">1</div>
+                    <div class="promo-item-label">Tassay Energy<br>(по цене)</div>
+                </div>
+                <div class="promo-plus">+</div>
+                <div class="promo-item">
+                    <div class="promo-item-count">1</div>
+                    <div class="promo-item-label">Tassay Energy<br>(бесплатно от поставщика)</div>
+                </div>
+                <div class="promo-plus">+</div>
+                <div class="promo-item">
+                    <div class="promo-item-count">1</div>
+                    <div class="promo-item-label">Товар магазина<br>(по цене)</div>
+                </div>
+                <div class="promo-equals">=</div>
+                <div class="promo-result">
+                    <div class="promo-item-count">2+1</div>
+                    <div class="promo-item-label">Акционный комплект</div>
+                </div>
+            </div>
+            <p class="promo-note">Поставщик «Юг Продукт» предоставляет банки в формате скрутки 1+1. Покупатель также приобретает один товар из магазина при заправке, формируя комплект 2+1 и получая шанс на участие в розыгрыше.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h3>Покупатель приобретает акционный комплект</h3>
+                    <p>На кассе заправки T.S клиент покупает скрутку Tassay Energy (2 банки) и один любой товар из магазина. В чеке фиксируется акционная покупка комплекта 2+1.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3>Чек в лототрон</h3>
+                    <p>Покупатель подписывает на чеке свой номер телефона и бросает его в лототрон, установленный на заправке. Каждый чек = 1 шанс на участие в розыгрыше.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h3>Накопление чеков в лототроне</h3>
+                    <p>На протяжении всего срока акции чеки с номерами телефонов накапливаются в лототроне. Чем больше покупок — тем больше шансов у участника.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h3>Розыгрыш в прямом эфире</h3>
+                    <p>По истечении срока акции проводится розыгрыш в прямом эфире. Из лототрона извлекаются чеки — каждый победитель получает 20 литров АИ-92. Общий призовой фонд: 300 литров (15 победителей).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Главный приз -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">03 / Главный приз</div>
+            <h2 class="section-title">Призовой фонд</h2>
+        </div>
+
+        <div class="prize-section">
+            <div class="prize-header">
+                <div class="prize-amount">300</div>
+                <div class="prize-unit">литров топлива — общий призовой фонд</div>
+                <div class="prize-fuel">По 20 литров АИ-92 каждому победителю &middot; 15 победителей &middot; Заправки T.S</div>
+            </div>
+            <div class="prize-details">
+                <div class="prize-detail">
+                    <div class="prize-detail-icon">&#9981;</div>
+                    <h4>Заправки T.S</h4>
+                    <p>Приз реализуется исключительно на заправочных станциях нашей сети</p>
+                </div>
+                <div class="prize-detail">
+                    <div class="prize-detail-icon">&#9989;</div>
+                    <h4>20 литров каждому</h4>
+                    <p>Каждый из 15 победителей получает 20 литров АИ-92 на заправках T.S</p>
+                </div>
+                <div class="prize-detail">
+                    <div class="prize-detail-icon">&#127942;</div>
+                    <h4>Прямой эфир</h4>
+                    <p>Розыгрыш проводится в прямом эфире — чеки достаются из лототрона на глазах аудитории</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Таймлайн -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">04 / Этапы</div>
+            <h2 class="section-title">План реализации</h2>
+            <p class="section-desc">Ключевые этапы проведения акции</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Этап 1 — Подготовка</div>
+                <div class="timeline-title">Приём товара и оформление точек</div>
+                <div class="timeline-desc">Получение партии 1000+ банок Tassay Energy от «Юг Продукт». Формирование скруток 1+1. Установка лототронов на заправках. Размещение POS-материалов. Обучение кассиров механике акции.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Этап 2 — Старт акции</div>
+                <div class="timeline-title">Запуск продаж акционных комплектов</div>
+                <div class="timeline-desc">Начало продаж комплектов 2+1 на всех участвующих заправках. Покупатели подписывают номер телефона на чеке и бросают в лототрон. Информирование клиентов о розыгрыше.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Этап 3 — Активная фаза</div>
+                <div class="timeline-title">Стимулирование продаж</div>
+                <div class="timeline-desc">Продвижение акции через соцсети и на точках продаж. Мониторинг остатков. Промежуточные напоминания о приближении розыгрыша для стимулирования повторных покупок.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Этап 4 — Финал</div>
+                <div class="timeline-title">Розыгрыш в прямом эфире</div>
+                <div class="timeline-desc">Проведение розыгрыша в прямом эфире. Из лототрона извлекаются 15 чеков — каждый победитель получает 20 литров АИ-92. Публикация результатов в соцсетях.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Выгоды -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">05 / Выгоды</div>
+            <h2 class="section-title">Что получает каждая сторона</h2>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit">
+                <div class="benefit-icon">&#9981;</div>
+                <h3>Заправки T.S</h3>
+                <p>Рост трафика на заправках. Увеличение среднего чека. Повышение лояльности клиентов. Продвижение бренда T.S.</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">&#128230;</div>
+                <h3>Юг Продукт</h3>
+                <p>Массовый сбыт продукции. Выход на новую аудиторию автомобилистов. Укрепление партнёрства с сетью T.S.</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">&#9889;</div>
+                <h3>Tassay Energy</h3>
+                <p>Узнаваемость бренда среди водителей. Дегустация продукта за счёт формата 1+1. Ассоциация с энергией и движением.</p>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">&#128100;</div>
+                <h3>Покупатель</h3>
+                <p>Вторая банка энергетика бесплатно при покупке комплекта. Шанс выиграть 300 литров бензина. Положительный опыт на заправках T.S.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Прецедент -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">06 / Опыт</div>
+            <h2 class="section-title">Проверенная модель</h2>
+            <p class="section-desc">Подобная акция уже показала отличный результат</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: 24px; padding: 3rem; text-align: center;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #00c853; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">Предыдущая акция — энергетик Flash</div>
+            <div style="font-size: clamp(3rem, 7vw, 5rem); font-weight: 900; background: linear-gradient(135deg, #00e676, #00c853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1;">2 500</div>
+            <div style="font-size: 1.3rem; font-weight: 700; color: #b0bec5; margin-top: 0.5rem;">комплектов продано за 1 месяц</div>
+            <div style="margin-top: 2rem; display: inline-block; background: rgba(0, 200, 83, 0.1); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: 12px; padding: 1rem 2rem;">
+                <span style="color: #78909c; font-size: 0.95rem;">Акция с Tassay Energy строится на проверенной механике с потенциалом повторить и превзойти этот результат</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Итоги -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-number">07 / Итого</div>
+            <h2 class="section-title">Ключевые цифры акции</h2>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-value">1000</div>
+                <div class="summary-card-label">акционных комплектов 2+1</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value">300 л</div>
+                <div class="summary-card-label">общий призовой фонд АИ-92</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value">20 л</div>
+                <div class="summary-card-label">каждому победителю</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value">15</div>
+                <div class="summary-card-label">победителей розыгрыша</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>T.S</strong> &mdash; Стратегия розыгрыша совместно с «Юг Продукт» и Tassay Energy</p>
+        <p style="margin-top: 0.5rem;">Документ подготовлен в 2026 году</p>
+    </footer>
+
+</body>
+</html>
